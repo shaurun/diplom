@@ -1,6 +1,7 @@
 package com.shaurun.site.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "lessons")
@@ -16,8 +17,12 @@ public class Lesson {
     @Column(name = "status")
     int status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     Subject subject;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "lesson_id")
+    private Set<Word> words;
 
     public long getId() {
         return id;
@@ -49,6 +54,14 @@ public class Lesson {
 
     public void setSubject(Subject subject) {
         this.subject = subject;
+    }
+
+    public Set<Word> getWords() {
+        return words;
+    }
+
+    public void setWords(Set<Word> words) {
+        this.words = words;
     }
 
     @Override

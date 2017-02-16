@@ -7,6 +7,7 @@ import com.shaurun.site.services.LessonService;
 import com.shaurun.site.services.SubjectService;
 import com.shaurun.site.services.TopicSetvice;
 import com.shaurun.site.services.UserService;
+import com.shaurun.site.util.EntityInitializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -50,7 +51,6 @@ public class SubjectController {
 
     @RequestMapping(value = "/subjects", method = RequestMethod.GET)
     public String listSubjects(Model model) {
-        model.addAttribute("subject", new Subject());
         List<Subject> subjectList = subjectService.listSubjects();
         User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         com.shaurun.site.model.User user = userService.findByUsername(userDetails.getUsername());
@@ -61,6 +61,7 @@ public class SubjectController {
             }
         });
         model.addAttribute("listSubjects", subjectList);
+        model.addAttribute("subject", new Subject());
         return "subjects";
     }
 
@@ -72,6 +73,9 @@ public class SubjectController {
         if (subject.getId() == 0l){
             subjectService.addSubject(subject);
         } else {
+            Subject subjectInDB = subjectService.getSubjectById(subject.getId());
+            subject.setLessons(subjectInDB.getLessons());
+            subject.setTopics(subjectInDB.getTopics());
             subjectService.edit(subject);
         }
         return "redirect:/subjects";
@@ -85,7 +89,8 @@ public class SubjectController {
 
     @RequestMapping(value = "/subjects/edit/{id}")
     public String editSubjects(Model model, @PathVariable("id") long id) {
-        model.addAttribute("subject", subjectService.getSubjectById(id));
+        Subject subject = subjectService.getSubjectById(id);
+        model.addAttribute("subject", subject);
         List<Subject> subjectList = subjectService.listSubjects();
         User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         com.shaurun.site.model.User user = userService.findByUsername(userDetails.getUsername());
@@ -100,7 +105,7 @@ public class SubjectController {
     }
 
     @RequestMapping(value = "subject/{id}")
-    public String newsData (Model model, @PathVariable("id") long id) {
+    public String subjectInfo (Model model, @PathVariable("id") long id) {
         Subject subject = subjectService.getSubjectById(id);
         model.addAttribute("subject", subject);
         model.addAttribute("listLessons", subjectService.listSubjectLessons(id));

@@ -37,12 +37,16 @@
                 <value>com.shaurun.site.model.User</value>
                 <value>com.shaurun.site.model.Role</value>
                 <value>com.shaurun.site.model.Topic</value>
+                <value>com.shaurun.site.model.Word</value>
             </list>
         </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.connection.Charset">UTF-8</prop>
+                <prop key="hibernate.connection.CharacterEncoding">UTF-8</prop>
+                <prop key="hibernate.connection.Useunicode">true</prop>
             </props>
         </property>
     </bean>
@@ -81,6 +85,15 @@
 
     <bean id="topicService" class="com.shaurun.site.services.TopicServiceImpl">
         <property name="topicDao" ref="topicDao"/>
+    </bean>
+
+    <!--WordDao and WordService beans-->
+    <bean id="wordDao" class="com.shaurun.site.dao.WordDaoImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory"/>
+    </bean>
+
+    <bean id="wordService" class="com.shaurun.site.services.WordServiceImpl">
+        <property name="wordDao" ref="wordDao"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">

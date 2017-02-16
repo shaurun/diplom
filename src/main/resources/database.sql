@@ -38,3 +38,5 @@ CREATE TABLE news (
   date  DATETIME        NOT NULL
 )
   ENGINE = InnoDB;
+
+show variables like 'char%';

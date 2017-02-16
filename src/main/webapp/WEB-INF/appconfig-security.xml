@@ -12,6 +12,7 @@ http://www.springframework.org/schema/security ">
         <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/subjects/*" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/subject/*" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/lesson/*" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <!--<intercept-url pattern="/welcome" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>-->
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
 

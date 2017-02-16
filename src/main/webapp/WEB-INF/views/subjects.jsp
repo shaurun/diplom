@@ -23,8 +23,8 @@
     <tr>
         <td><a href="<c:url value='/subject/${subject.id}'/>">${subject.name}</a></td>
         <td>${subject.user.username}</td>
-        <td><a href="<c:url value='subjects/edit/${subject.id}'/>">Изменить</a></td>
-        <td><a href="<c:url value='subjects/delete/${subject.id}'/>">Удалить</a></td>
+        <td><a href="<c:url value='/subjects/edit/${subject.id}'/>">Изменить</a></td>
+        <td><a href="<c:url value='/subjects/delete/${subject.id}'/>">Удалить</a></td>
     </tr>
     </c:forEach>
 </table>
@@ -32,7 +32,7 @@
 
 <h2>Добавить предмет</h2>
 <c:url var="addAction" value="/subjects/add"/>
-<form:form action="${addAction}" commandName="subject">
+<form:form action="${addAction}" commandName="subject"  accept-charset="UTF-8">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <table>
         <c:if test="${!empty subject.name}">

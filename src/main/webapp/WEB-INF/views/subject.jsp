@@ -23,7 +23,7 @@
             <table>
                 <c:forEach items="${listLessons}" var="lesson">
                     <tr>
-                        <td>${lesson.name}</td>
+                        <td><a href="<c:url value='/lesson/${lesson.id}'/> ">${lesson.name}</a></td>
                         <td><a href="<c:url value='/subject/editLesson/${subject.id}-${lesson.id}'/>">Изменить</a> </td>
                         <td><a href="<c:url value='/subject/deleteLesson/${subject.id}-${lesson.id}'/>">Удалить</a></td>
                     </tr>
