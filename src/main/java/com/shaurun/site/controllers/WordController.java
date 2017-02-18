@@ -5,7 +5,7 @@ import com.shaurun.site.model.Topic;
 import com.shaurun.site.model.Word;
 import com.shaurun.site.services.LessonService;
 import com.shaurun.site.services.SubjectService;
-import com.shaurun.site.services.TopicSetvice;
+import com.shaurun.site.services.TopicService;
 import com.shaurun.site.services.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,7 +23,7 @@ import java.util.List;
 public class WordController {
     private SubjectService subjectService;
     private LessonService lessonService;
-    private TopicSetvice topicSetvice;
+    private TopicService topicService;
     private WordService wordService;
 
     @Autowired(required = true)
@@ -41,8 +40,8 @@ public class WordController {
 
     @Autowired(required = true)
     @Qualifier(value = "topicService")
-    public void setTopicSetvice(TopicSetvice topicSetvice) {
-        this.topicSetvice = topicSetvice;
+    public void setTopicService(TopicService topicService) {
+        this.topicService = topicService;
     }
 
     @Autowired(required = true)
@@ -66,7 +65,7 @@ public class WordController {
     }
 
     @RequestMapping(value = "/lesson/{lessonId}/addWord", method = RequestMethod.POST)
-    public String addSubject(Model model, @ModelAttribute("word") Word word, @PathVariable("lessonId") long lessonId){
+    public String addWord(Model model, @ModelAttribute("word") Word word, @PathVariable("lessonId") long lessonId){
         Lesson lesson = lessonService.getLessonById(lessonId);
         word.setLesson(lesson);
         if (word.getId() == 0l){
@@ -75,6 +74,27 @@ public class WordController {
             wordService.edit(word);
         }
         return "redirect:/lesson/"+lessonId;
+    }
+
+
+    @RequestMapping(value = "lesson/deleteWord/{lessonId}-{id}")
+    public String deleteWord(Model model, @PathVariable("lessonId") long lessonId, @PathVariable("id") long id) {
+        wordService.delete(id);
+        return "redirect:/lesson/"+lessonId;
+    }
+
+    @RequestMapping(value = "lesson/editWord/{lessonId}-{id}")
+    public String editWord(Model model, @PathVariable("lessonId") long lessonId, @PathVariable("id") long id) {
+        Lesson lesson = lessonService.getLessonById(lessonId);
+        model.addAttribute("lesson", lesson); //adding lesson just to know in what lesson we are
+        model.addAttribute("word", wordService.getWordById(id));
+        List<Word> wordsList = wordService.listLessonWords(lesson);
+        model.addAttribute("listWords", wordsList);
+        List<String> topicNames = Collections.EMPTY_LIST;
+        List<Topic> topics = subjectService.listSubjectTopics(lesson.getSubject().getId());
+        model.addAttribute("listTopics", //list of available topics for user
+                subjectService.listSubjectTopics(lesson.getSubject().getId()));
+        return "lesson";
     }
 
 

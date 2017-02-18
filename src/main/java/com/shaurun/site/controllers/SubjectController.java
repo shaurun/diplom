@@ -5,9 +5,8 @@ import com.shaurun.site.model.Subject;
 import com.shaurun.site.model.Topic;
 import com.shaurun.site.services.LessonService;
 import com.shaurun.site.services.SubjectService;
-import com.shaurun.site.services.TopicSetvice;
+import com.shaurun.site.services.TopicService;
 import com.shaurun.site.services.UserService;
-import com.shaurun.site.util.EntityInitializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,7 +25,7 @@ import java.util.function.Predicate;
 public class SubjectController {
     private SubjectService subjectService;
     private LessonService lessonService;
-    private TopicSetvice topicSetvice;
+    private TopicService topicService;
 
     @Autowired
     private UserService userService;
@@ -45,8 +44,8 @@ public class SubjectController {
 
     @Autowired(required = true)
     @Qualifier(value = "topicService")
-    public void setTopicSetvice(TopicSetvice topicSetvice) {
-        this.topicSetvice = topicSetvice;
+    public void setTopicService(TopicService topicService) {
+        this.topicService = topicService;
     }
 
     @RequestMapping(value = "/subjects", method = RequestMethod.GET)
@@ -121,6 +120,8 @@ public class SubjectController {
         if (lesson.getId() == 0l){
             lessonService.add(lesson);
         } else {
+            Lesson lessonInDB = lessonService.getLessonById(lesson.getId());
+            lesson.setWords(lessonInDB.getWords());
             lessonService.edit(lesson);
         }
         return "redirect:/subject/"+subjectId;
@@ -137,33 +138,39 @@ public class SubjectController {
         model.addAttribute("lesson", lessonService.getLessonById(id));
         List<Lesson> lessonsList = subjectService.listSubjectLessons(subjectId);
         model.addAttribute("listLessons", lessonsList);
+        List<Topic> topicsList = subjectService.listSubjectTopics(subjectId);
+        model.addAttribute("listTopics", topicsList);
         model.addAttribute("subject", subjectService.getSubjectById(subjectId));
         model.addAttribute("topic", new Topic());
         return "subject";
     }
 
     @RequestMapping(value = "/subject/{subjectId}/addTopic", method = RequestMethod.POST)
-    public String addLesson(Model model, @ModelAttribute("topic") Topic topic, @PathVariable("subjectId") long subjectId){
+    public String addTopic(Model model, @ModelAttribute("topic") Topic topic, @PathVariable("subjectId") long subjectId){
         topic.setSubject(subjectService.getSubjectById(subjectId));
         if (topic.getId() == 0l){
-            topicSetvice.add(topic);
+            topicService.add(topic);
         } else {
-            topicSetvice.edit(topic);
+            Topic topicInDB = topicService.getTopicById(topic.getId());
+            topic.setWords(topicInDB.getWords());
+            topicService.edit(topic);
         }
         return "redirect:/subject/"+subjectId;
     }
 
     @RequestMapping(value = "subject/deleteTopic/{subjectId}-{id}")
     public String deleteTopic(Model model, @PathVariable("subjectId") long subjectId, @PathVariable("id") long id) {
-        topicSetvice.delete(id);
+        topicService.delete(id);
         return "redirect:/subject/"+subjectId;
     }
 
     @RequestMapping(value = "subject/editTopic/{subjectId}-{id}")
     public String editTopic(Model model, @PathVariable("subjectId") long subjectId, @PathVariable("id") long id) {
-        model.addAttribute("topic", topicSetvice.getTopicById(id));
+        model.addAttribute("topic", topicService.getTopicById(id));
         List<Topic> topicsList = subjectService.listSubjectTopics(subjectId);
         model.addAttribute("listTopics", topicsList);
+        List<Lesson> lessonsList = subjectService.listSubjectLessons(subjectId);
+        model.addAttribute("listLessons", lessonsList);
         model.addAttribute("subject", subjectService.getSubjectById(subjectId));
         model.addAttribute("lesson", new Lesson());
         return "subject";

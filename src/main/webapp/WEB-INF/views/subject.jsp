@@ -92,7 +92,7 @@
 <form:form action="${addTopicAction}" commandName="topic">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <table>
-        <c:if test="${!empty lesson.name}">
+        <c:if test="${!empty topic.name}">
             <tr>
                 <td>
                     <form:label path="id">
@@ -117,11 +117,11 @@
         </tr>
         <tr>
             <td colspan="2">
-                <c:if test="${!empty lesson.name}">
+                <c:if test="${!empty topic.name}">
                     <input type="submit"
                            value="<spring:message text="Изменить тему"/>"/>
                 </c:if>
-                <c:if test="${empty lesson.name}">
+                <c:if test="${empty topic.name}">
                     <input type="submit"
                            value="<spring:message text="Создать тему"/>"/>
                 </c:if>

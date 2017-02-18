@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class TopicServiceImpl implements TopicSetvice {
+public class TopicServiceImpl implements TopicService {
     private TopicDao topicDao;
 
     @Autowired(required = true)

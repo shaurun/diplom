@@ -18,6 +18,8 @@
         <th width="200">Слово</th>
         <th width="200">Значение</th>
         <th width="200">Темы</th>
+        <th>Изменить</th>
+        <th>Удалить</th>
     </tr>
     <c:forEach items="${listWords}" var="word">
         <tr>
@@ -25,6 +27,8 @@
             <td>${word.word}</td>
             <td>${word.translation}</td>
             <td>${word.topic}"</td>
+            <td><a href="<c:url value='/lesson/editWord/${lesson.id}-${word.id}'/>">Изменить</a></td>
+            <td><a href="<c:url value='/lesson/deleteWord/${lesson.id}-${word.id}'/>">Удалить</a></td>
         </tr>
     </c:forEach>
 </table>

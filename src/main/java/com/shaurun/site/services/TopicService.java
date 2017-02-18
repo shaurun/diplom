@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Shaurun on 13.02.2017.
  */
-public interface TopicSetvice {
+public interface TopicService {
     void add(Topic topic);
 
     void edit(Topic topic);
