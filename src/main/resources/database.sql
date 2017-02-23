@@ -39,13 +39,35 @@ CREATE TABLE news (
 )
   ENGINE = InnoDB;
 
--- Tasble: subject
+-- Tasble: subjects
 CREATE TABLE subjects (
   id      INT             NOT NULL AUTO_INCREMENT PRIMARY KEY ,
   name    VARCHAR(255)    NOT NULL ,
   user_id  INT            NOT NULL ,
 
   FOREIGN KEY (user_id) REFERENCES users(id)
+)
+  ENGINE = InnoDB;
+
+-- Tasble: topics
+CREATE TABLE topics (
+  id      INT             NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  name    VARCHAR(255)    NOT NULL ,
+  subject_id  INT         NOT NULL ,
+
+  FOREIGN KEY (subject_id) REFERENCES subjects(id)
+)
+  ENGINE = InnoDB;
+
+-- Tasble: lessons
+CREATE TABLE lessons (
+  id      INT             NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  name    VARCHAR(255)    NOT NULL ,
+  status  SMALLINT        ,
+  subject_id  INT         NOT NULL ,
+  color   VARCHAR(7)      DEFAULT '#FFFFFF' ,
+
+  FOREIGN KEY (subject_id) REFERENCES subjects(id)
 )
   ENGINE = InnoDB;
 

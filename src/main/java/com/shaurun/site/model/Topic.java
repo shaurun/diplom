@@ -14,6 +14,9 @@ public class Topic {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "color")
+    private String color;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Subject subject;
 
@@ -35,6 +38,14 @@ public class Topic {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public Subject getSubject() {
