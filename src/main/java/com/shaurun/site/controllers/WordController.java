@@ -53,6 +53,7 @@ public class WordController {
     @RequestMapping(value = "/lesson/{lessonId}", method = RequestMethod.GET)
     public String listLessonWords(Model model, @PathVariable("lessonId") long lessonId) {
         Lesson lesson = lessonService.getLessonById(lessonId);
+        model.addAttribute("subject", lesson.getSubject());
         model.addAttribute("lesson", lesson); //adding lesson just to know in what lesson we are
         List<Word> wordsList = wordService.listLessonWords(lesson);
         model.addAttribute("listWords", wordsList); //list of words under specified lesson
@@ -86,6 +87,7 @@ public class WordController {
     @RequestMapping(value = "lesson/editWord/{lessonId}-{id}")
     public String editWord(Model model, @PathVariable("lessonId") long lessonId, @PathVariable("id") long id) {
         Lesson lesson = lessonService.getLessonById(lessonId);
+        model.addAttribute("subject", lesson.getSubject());
         model.addAttribute("lesson", lesson); //adding lesson just to know in what lesson we are
         model.addAttribute("word", wordService.getWordById(id));
         List<Word> wordsList = wordService.listLessonWords(lesson);

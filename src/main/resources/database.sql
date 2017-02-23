@@ -71,5 +71,18 @@ CREATE TABLE lessons (
 )
   ENGINE = InnoDB;
 
+-- Tasble: words
+CREATE TABLE words (
+  id            INT             NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  word          VARCHAR(255)    NOT NULL ,
+  translation   VARCHAR(255)    NOT NULL ,
+  lesson_id     INT             ,
+  topic_id      INT             ,
+
+  FOREIGN KEY (lesson_id) REFERENCES lessons(id),
+  FOREIGN KEY (topic_id)  REFERENCES topics(id)
+)
+  ENGINE = InnoDB;
+
 
 show variables like 'char%';
