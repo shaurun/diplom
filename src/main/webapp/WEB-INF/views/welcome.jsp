@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container">
-    <nav class="navbar navbar-default navbar-inverse" role="navigation">
+    <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -21,24 +21,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Полиглот</a>
+                <a class="navbar-brand" href="<c:url value='/welcome'/>">Полиглот</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="<c:url value='/subjects'/>">Дисциплины</a> </li>
-                    <li><a href="#">Проверь себя!</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Уроки<span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Словарь</a></li>
-                            <li><a href="#">Тексты</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Создать словарь</a></li>
-                            <li><a href="#">Создать текст</a></li>
-                        </ul>
-                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <c:if test="${pageContext.request.userPrincipal.name != null}">

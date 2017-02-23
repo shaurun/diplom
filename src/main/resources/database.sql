@@ -39,4 +39,15 @@ CREATE TABLE news (
 )
   ENGINE = InnoDB;
 
+-- Tasble: subject
+CREATE TABLE subjects (
+  id      INT             NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  name    VARCHAR(255)    NOT NULL ,
+  user_id  INT            NOT NULL ,
+
+  FOREIGN KEY (user_id) REFERENCES users(id)
+)
+  ENGINE = InnoDB;
+
+
 show variables like 'char%';
