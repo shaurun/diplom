@@ -22,6 +22,9 @@ public class Word {
     @ManyToOne
     private Topic topic;
 
+    @Transient
+    transient private long topicId;
+
     public long getId() {
         return id;
     }
@@ -60,6 +63,14 @@ public class Word {
 
     public void setTopic(Topic topic) {
         this.topic = topic;
+    }
+
+    public long getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(long topicId) {
+        this.topicId = topicId;
     }
 
     @Override

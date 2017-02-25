@@ -69,6 +69,9 @@ public class WordController {
     public String addWord(Model model, @ModelAttribute("word") Word word, @PathVariable("lessonId") long lessonId){
         Lesson lesson = lessonService.getLessonById(lessonId);
         word.setLesson(lesson);
+        if (word.getTopicId() != 0) {
+            word.setTopic(topicService.getTopicById(word.getTopicId()));
+        }
         if (word.getId() == 0l){
             wordService.add(word);
         } else {
@@ -92,12 +95,28 @@ public class WordController {
         model.addAttribute("word", wordService.getWordById(id));
         List<Word> wordsList = wordService.listLessonWords(lesson);
         model.addAttribute("listWords", wordsList);
-        List<String> topicNames = Collections.EMPTY_LIST;
-        List<Topic> topics = subjectService.listSubjectTopics(lesson.getSubject().getId());
         model.addAttribute("listTopics", //list of available topics for user
                 subjectService.listSubjectTopics(lesson.getSubject().getId()));
         return "lesson";
     }
 
+    @RequestMapping(value = "lesson/editWord/{lessonId}-{id}/unbindTopic/{topicId}")
+    public String unbindTopic(Model model, @PathVariable("lessonId") long lessonId,
+                              @PathVariable("topicId") long topicId, @PathVariable("id") long id) {
+        Word word = wordService.getWordById(id);
+        if (word.getTopic().getId() == topicId) {
+            word.setTopic(null);
+            wordService.edit(word);
+        }
 
+        Lesson lesson = lessonService.getLessonById(lessonId);
+        model.addAttribute("subject", lesson.getSubject());
+        model.addAttribute("lesson", lesson); //adding lesson just to know in what lesson we are
+        model.addAttribute("word", new Word());
+        List<Word> wordsList = wordService.listLessonWords(lesson);
+        model.addAttribute("listWords", wordsList);
+        model.addAttribute("listTopics", //list of available topics for user
+                subjectService.listSubjectTopics(lesson.getSubject().getId()));
+        return "lesson";
+    }
 }

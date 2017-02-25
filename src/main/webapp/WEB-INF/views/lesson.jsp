@@ -54,6 +54,7 @@
         </div><!-- /.container-fluid -->
     </nav>
 
+    <div class="row">
     <c:if test="${!empty listWords}">
         <table class="table table-striped">
             <thead>
@@ -70,7 +71,15 @@
                 <tr>
                     <td>${word.word}</td>
                     <td>${word.translation}</td>
-                    <td>${word.topic}</td>
+                    <td>
+                        <c:if test="${!empty word.topic}">
+                            <span class="badge" style="background-color: ${word.topic.color}">
+                                <a href="<c:url value='/lesson/editWord/${lesson.id}-${word.id}/unbindTopic/${word.topic.id}'/>">
+                                        ${word.topic.name}
+                                </a>
+                            </span>
+                        </c:if>
+                    </td>
                     <td><a href="<c:url value='/lesson/editWord/${lesson.id}-${word.id}'/>">Изменить</a></td>
                     <td><a href="<c:url value='/lesson/deleteWord/${lesson.id}-${word.id}'/>">Удалить</a></td>
                 </tr>
@@ -78,7 +87,10 @@
             </tbody>
         </table>
     </c:if>
+    </div>
 
+    <div class="row">
+        <div class="col-sm-6">
     <c:url var="addWordAction" value="/lesson/${lesson.id}/addWord"/>
     <form:form action="${addWordAction}" commandName="word" accept-charset="UTF-8" class="form-inline">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -94,6 +106,9 @@
         <div class="form-group">
             <form:input path="translation" class="form-control" placeholder="Значение"/>
         </div>
+            <div class="form-group">
+                <form:input id="topicId" path="topicId" value="${word.topic.id}" class="form-control" style="display: none"/>
+            </div>
         <c:if test="${!empty word.word}">
             <button type="submit" class="btn btn-default"><spring:message text="Изменить слово"/></button>
         </c:if>
@@ -101,6 +116,37 @@
             <button type="submit" class="btn btn-default"><spring:message text="Добавить слово"/></button>
         </c:if>
     </form:form>
+            <div id="topicBadge">
+                    <c:if test="${!empty word.topic}">
+                    <span id="selected_topic_badge" class="badge" style="background-color: ${word.topic.color}">${word.topic.name}</span>
+                    </c:if>
+                    <c:if test="${empty word.topic}">
+                    <span id="selected_topic_badge" class="badge" style="display: none" </span>
+                    </c:if>
+            </div>
+
+        </div>
+        <div class="col-sm-6" style="
+                padding: 120px 90px;
+                min-width: 400px;
+                background: url(${contextPath}/resources/sticker.png) no-repeat;
+                background-size: 100%;">
+        <div>
+            <script>
+                function changeValue(o){
+                    document.getElementById('topicId').value=o.id;
+                    document.getElementById('selected_topic_badge').setAttribute("style", o.getAttribute("style"));
+                    document.getElementById('selected_topic_badge').textContent=o.innerText;
+                }
+            </script>
+            <c:forEach items="${listTopics}" var="topic">
+                <span id="${topic.id}" class="badge"
+                      style="background-color: ${topic.color}; font-size: x-large; margin: 10px"
+                      onclick="changeValue(this)">${topic.name}</span>
+            </c:forEach>
+        </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

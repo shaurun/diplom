@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 @Controller
@@ -82,6 +83,14 @@ public class SubjectController {
 
     @RequestMapping(value = "/subjects/delete/{id}")
     public String deleteSubject(Model model, @PathVariable("id") long id) {
+        List<Lesson> lessons = subjectService.listSubjectLessons(id);
+        List<Topic> topics = subjectService.listSubjectTopics(id);
+        for(Lesson lesson : lessons) {
+            lessonService.delete(lesson.getId());
+        }
+        for(Topic topic : topics) {
+            topicService.delete(topic.getId());
+        }
         subjectService.delete(id);
         return "redirect:/subjects";
     }
