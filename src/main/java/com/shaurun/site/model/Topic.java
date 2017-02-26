@@ -20,7 +20,7 @@ public class Topic {
     @ManyToOne(fetch = FetchType.EAGER)
     private Subject subject;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH})
     @JoinColumn(name = "topic_id")
     private Set<Word> words;
 
