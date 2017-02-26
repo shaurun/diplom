@@ -139,10 +139,13 @@
                 checkWord();
                 return;
             }
+            document.getElementById("pb").setAttribute("style", "width:"+(i+1)/end*100+"%");
+            document.getElementById("pb").innerHTML=(i+1)+"/"+end;
             if (i < end-1) {
                 i++;
                 setWord();
                 checked = false;
+
             }else{
                 alert("Количество правильных ответов: " + (end-wrong)/end*100 + "%");
             }
@@ -151,18 +154,32 @@
         addLoadEvent(setWord);
     </script>
 
+    <div class="row">
     <form onsubmit="iter(); return false;" class="form-horizontal">
         <fieldset>
             <div id="dict" class="form-group">
-                <label class="control-label col-sm-2 col-sm-push-4" id="word" for="translation"></label>
-                <div class="col-sm-2 col-sm-push-4">
+                <label class="control-label col-sm-3" id="word" for="translation"></label>
+                <div class="col-sm-3">
                     <input autocomplete="off" class="form-control" type="text" id="translation"/>
                     <span id="check"></span>
                 </div>
+                <div class="col-sm-1">
+                    <input type="submit" value="" style="background: url(${contextPath}/resources/right_arrow.png) no-repeat;
+                       cursor: pointer; border: none; background-size: contain; background-position: center;
+                            min-width: 124px; height: 34px"/>
+                </div>
             </div>
-            <input type="submit" value="check"/>
+
         </fieldset>
     </form>
+    </div>
+
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" id="pb"
+             aria-valuemin="0" aria-valuemax="100" style="width:0%">
+            0/${listWords.size()}
+        </div>
+    </div>
 </div>
 </body>
 </html>
