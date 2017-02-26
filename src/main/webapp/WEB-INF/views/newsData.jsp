@@ -6,6 +6,9 @@
 <html>
 <head>
     <title>News data</title>
+    <link rel="icon"
+          type="image/png"
+          href="${contextPath}/resources/favicon.ico" />
 </head>
 <body>
 <h1>Новость</h1>

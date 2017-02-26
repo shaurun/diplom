@@ -8,6 +8,9 @@
 <head>
     <title>Welcome</title>
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="icon"
+          type="image/png"
+          href="${contextPath}/resources/favicon.ico" />
 </head>
 <body>
 <div class="container">
@@ -49,63 +52,37 @@
         </div><!-- /.container-fluid -->
     </nav>
 
-    <div class="container">
-        <div class="col-md-12">
-            <h1>Alice in Wonderland, part dos</h1>
-            <p>'You ought to be ashamed of yourself for asking such a simple question,' added the Gryphon; and then they both sat silent and looked at poor Alice, who felt ready to sink into the earth. At last the Gryphon said to the Mock Turtle, 'Drive on, old fellow! Don't be all day about it!' and he went on in these words:
-                'Yes, we went to school in the sea, though you mayn't believe it—'
-                'I never said I didn't!' interrupted Alice.
-                'You did,' said the Mock Turtle.
-            </p>
-            <div>
-                <span class="badge">Posted 2012-08-02 20:47:04</span>
-                <div class="pull-right"><span class="label label-default">alice</span>
-                    <span class="label label-primary">story</span>
-                    <span class="label label-success">blog</span>
-                    <span class="label label-info">personal</span>
-                    <span class="label label-warning">Warning</span>
-                <span class="label label-danger">Danger</span>
-                </div>
+    <div class="row">
+        <div class="col-sm-7">
+            <div class="jumbotron">
+                <h1><strong>Изучение</strong> слов онлайн</h1>
+                <p>Пора покончить с тетрадями и словарями, весящями тонну! Как хочется носить все в голове или хотя бы в мобильном!
+                    На нашем сайте вы можете составить свой индивидуальный список слов и выражений на изучаемом языке.
+                    А мы поможем вам их запомнить с помощью упражнений. Совершенствуйте себя! Мы не просим за это денег.</p>
             </div>
-            <hr>
-            <h1>Revolution has begun!</h1>
-            <p>'I am bound to Tahiti for more men.'
-                'Very good. Let me board you a moment—I come in peace.' With that he leaped from the canoe, swam to the boat; and climbing the gunwale, stood face to face with the captain.
-                'Cross your arms, sir; throw back your head. Now, repeat after me. As soon as Steelkilt leaves me, I swear to beach this boat on yonder island, and remain there six days. If I do not, may lightning strike me!'A pretty scholar,' laughed the Lakeman. 'Adios, Senor!' and leaping into the sea, he swam back to his comrades.
-            </p>
-            <div>
-                <span class="badge">Posted 2012-08-02 20:47:04</span>
-                <div class="pull-right"><span class="label label-default">alice</span>
-                    <span class="label label-primary">story</span>
-                    <span class="label label-success">blog</span>
-                    <span class="label label-info">personal</span>
-                    <span class="label label-warning">Warning</span>
-                    <span class="label label-danger">Danger</span>
-                </div>
-            </div>
-            <hr>
-
-            <c:forEach var="i" begin="0" end="${pageScope.values().size()}">
-                <h2>${pageScope.values().toArray()[i]}</h2>
-                <!--<h1>Revolution has begun!</h1>
-                <p>'I am bound to Tahiti for more men.'
-                    'Very good. Let me board you a moment—I come in peace.' With that he leaped from the canoe, swam to the boat; and climbing the gunwale, stood face to face with the captain.
-                    'Cross your arms, sir; throw back your head. Now, repeat after me. As soon as Steelkilt leaves me, I swear to beach this boat on yonder island, and remain there six days. If I do not, may lightning strike me!'A pretty scholar,' laughed the Lakeman. 'Adios, Senor!' and leaping into the sea, he swam back to his comrades.
-                </p>
-                <div>
-                    <span class="badge">Posted 2012-08-02 20:47:04</span>
-                    <div class="pull-right"><span class="label label-default">alice</span>
-                        <span class="label label-primary">story</span>
-                        <span class="label label-success">blog</span>
-                        <span class="label label-info">personal</span>
-                        <span class="label label-warning">Warning</span>
-                        <span class="label label-danger">Danger</span>
-                    </div>
-                </div>-->
-            </c:forEach>
-
         </div>
+        <div class="col-sm-5">
+            <img src="${contextPath}/resources/bookgirl.jpg" style="max-width: 100%; max-height: 100%">
+        </div>
+        
     </div>
+    
+    <div class="row">
+        <c:if test="${!empty listNews}">
+        <div class="col-md-12">
+            <c:forEach items="${listNews}" var="news">
+                <h1>${news.title}</h1>
+                <p>${news.info}</p>
+                <div>
+                    <span class="badge">От ${news.date}</span>
+                </div>
+                <hr>
+            </c:forEach>
+        </div>
+        </c:if>
+    </div>
+</div>
+
 
 <script src="https://ajax.googleapis.com/libs/jquery/1.11.2/jquery.min.js"/>
 <script src="${contextPath}/resources/js/bootstrap.min.ja"/>

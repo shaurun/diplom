@@ -7,6 +7,9 @@
 <head>
     <title>Словарь</title>
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="icon"
+          type="image/png"
+          href="${contextPath}/resources/favicon.ico" />
 </head>
 <body>
 <div class="container">
