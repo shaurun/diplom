@@ -124,7 +124,7 @@
                     <span onclick="changeValue(document.getElementById(0))" id="selected_topic_badge" class="badge" style="font-size: x-large; background-color: ${word.topic.color}">${word.topic.name}</span>
                     </c:if>
                     <c:if test="${empty word.topic}">
-                    <span id="selected_topic_badge" class="badge" style="display: none" </span>
+                    <span id="selected_topic_badge" class="badge" style="display: none"/>
                     </c:if>
             </div>
 

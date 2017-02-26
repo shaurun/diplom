@@ -110,16 +110,18 @@
         function setWord() {
             var o = document.getElementById("word");
             o.innerHTML = generateDictionary()[0].key;
-            document.getElementById("translation").addEventListener("onfocusout", checkWord);
+            //document.getElementById("translation").addEventListener("onfocusout", checkWord());
         }
 
         function checkWord() {
             var word = document.getElementById("word").innerHTML;
-            var o = document.getElementById("translation");
-            if (o.value == enerateDictionary()[0].value) {
-                document.write("CORRECT!");
+            var o = document.getElementById("check");
+            if (document.getElementById("translation").value == generateDictionary()[0].value) {
+                o.setAttribute("class", "glyphicon glyphicon-ok form-control-feedback");
+                document.getElementById("dict").setAttribute("class", "form-group has-success has-feedback");
             } else {
-                document.write("INCORRECT!");
+                o.setAttribute("class", "glyphicon glyphicon-remove form-control-feedback");
+                document.getElementById("dict").setAttribute("class", "form-group has-error has-feedback");
             }
 
         }
@@ -129,10 +131,11 @@
 
     <form class="form-horizontal">
         <fieldset>
-            <div class="form-group">
+            <div id="dict" class="form-group">
                 <label class="control-label col-sm-2 col-sm-push-4" id="word" for="translation"></label>
                 <div class="col-sm-2 col-sm-push-4">
-                    <input class="form-control" type="text" id="translation"/>
+                    <input onchange="checkWord()" class="form-control" type="text" id="translation"/>
+                    <span id="check"></span>
                 </div>
             </div>
             <input type="button" value="check"/>
