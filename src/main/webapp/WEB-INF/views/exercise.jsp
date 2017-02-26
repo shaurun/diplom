@@ -82,6 +82,9 @@
     </div>
 
     <script>
+        var i = 0;
+        const end = ${listWords.size()};
+
         function generateDictionary() {
             var dict = [];
             <c:forEach items="${listWords}" var="word">
@@ -109,14 +112,14 @@
 
         function setWord() {
             var o = document.getElementById("word");
-            o.innerHTML = generateDictionary()[0].key;
+            o.innerHTML = generateDictionary()[i].key;
             //document.getElementById("translation").addEventListener("onfocusout", checkWord());
         }
 
         function checkWord() {
             var word = document.getElementById("word").innerHTML;
             var o = document.getElementById("check");
-            if (document.getElementById("translation").value == generateDictionary()[0].value) {
+            if (document.getElementById("translation").value == generateDictionary()[i].value) {
                 o.setAttribute("class", "glyphicon glyphicon-ok form-control-feedback");
                 document.getElementById("dict").setAttribute("class", "form-group has-success has-feedback");
             } else {
@@ -124,6 +127,13 @@
                 document.getElementById("dict").setAttribute("class", "form-group has-error has-feedback");
             }
 
+        }
+
+        function iter(){
+            if (i < end) {
+                i++;
+            }
+            setWord();
         }
 
         addLoadEvent(setWord);
@@ -134,11 +144,11 @@
             <div id="dict" class="form-group">
                 <label class="control-label col-sm-2 col-sm-push-4" id="word" for="translation"></label>
                 <div class="col-sm-2 col-sm-push-4">
-                    <input onchange="checkWord()" class="form-control" type="text" id="translation"/>
+                    <input autocomplete="off" onchange="checkWord()" class="form-control" type="text" id="translation"/>
                     <span id="check"></span>
                 </div>
             </div>
-            <input type="button" value="check"/>
+            <input type="button" value="check" onclick="iter()"/>
         </fieldset>
     </form>
 </div>
