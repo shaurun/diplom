@@ -113,7 +113,9 @@
         function setWord() {
             var o = document.getElementById("word");
             o.innerHTML = generateDictionary()[i].key;
-            //document.getElementById("translation").addEventListener("onfocusout", checkWord());
+            document.getElementById("translation").value = "";
+            document.getElementById("check").setAttribute("class", "");
+            document.getElementById("dict").setAttribute("class", "form-group");
         }
 
         function checkWord() {
@@ -139,7 +141,7 @@
         addLoadEvent(setWord);
     </script>
 
-    <form class="form-horizontal">
+    <form onsubmit="iter(); return false;" class="form-horizontal">
         <fieldset>
             <div id="dict" class="form-group">
                 <label class="control-label col-sm-2 col-sm-push-4" id="word" for="translation"></label>
@@ -148,7 +150,7 @@
                     <span id="check"></span>
                 </div>
             </div>
-            <input type="button" value="check" onclick="iter()"/>
+            <input type="submit" value="check"/>
         </fieldset>
     </form>
 </div>
