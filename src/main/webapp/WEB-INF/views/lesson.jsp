@@ -135,8 +135,10 @@
             <script>
                 function changeValue(o){
                     document.getElementById('topicId').value=o.id;
-                    document.getElementById('selected_topic_badge').setAttribute("style", o.getAttribute("style"));
-                    document.getElementById('selected_topic_badge').textContent=o.innerText;
+                    var selected_topic = document.getElementById('selected_topic_badge');
+                    selected_topic.setAttribute("style", o.getAttribute("style"));
+                    selected_topic.textContent=o.innerText;
+                    selected_topic.setAttribute("onclick", "changeValue(document.getElementById(0))");
                 }
             </script>
             <c:forEach items="${listTopics}" var="topic">
@@ -144,6 +146,7 @@
                       style="background-color: ${topic.color}; font-size: x-large; margin: 10px"
                       onclick="changeValue(this)">${topic.name}</span>
             </c:forEach>
+                <span id="0" style="display: none"></span>
         </div>
         </div>
     </div>
