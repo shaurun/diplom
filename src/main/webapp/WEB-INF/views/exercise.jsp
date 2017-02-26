@@ -60,7 +60,7 @@
     <h1>This is sparta</h1>
 
     <div class="row">
-    <c:if test="${!empty listWords}">
+    <!--<c:if test="${!empty listWords}">
         <table class="table table-striped">
             <thead>
             <h2>Словарь урока</h2>
@@ -78,12 +78,14 @@
             </c:forEach>
             </tbody>
         </table>
-    </c:if>
+    </c:if>-->
     </div>
 
     <script>
         var i = 0;
         const end = ${listWords.size()};
+        var wrong = 0;
+        var checked = false;
 
         function generateDictionary() {
             var dict = [];
@@ -127,15 +129,23 @@
             } else {
                 o.setAttribute("class", "glyphicon glyphicon-remove form-control-feedback");
                 document.getElementById("dict").setAttribute("class", "form-group has-error has-feedback");
+                wrong++;
             }
-
+            checked = true;
         }
 
         function iter(){
-            if (i < end) {
-                i++;
+            if(!checked) {
+                checkWord();
+                return;
             }
-            setWord();
+            if (i < end-1) {
+                i++;
+                setWord();
+                checked = false;
+            }else{
+                alert("Количество правильных ответов: " + (end-wrong)/end*100 + "%");
+            }
         }
 
         addLoadEvent(setWord);
@@ -146,7 +156,7 @@
             <div id="dict" class="form-group">
                 <label class="control-label col-sm-2 col-sm-push-4" id="word" for="translation"></label>
                 <div class="col-sm-2 col-sm-push-4">
-                    <input autocomplete="off" onchange="checkWord()" class="form-control" type="text" id="translation"/>
+                    <input autocomplete="off" class="form-control" type="text" id="translation"/>
                     <span id="check"></span>
                 </div>
             </div>
