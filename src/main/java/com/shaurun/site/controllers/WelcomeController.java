@@ -29,7 +29,7 @@ public class WelcomeController {
         newsList.sort(new Comparator<News>() {
             @Override
             public int compare(News o1, News o2) {
-                int dateCompare = o1.getDate().compareTo(o2.getDate());
+                int dateCompare = o1.getDate().compareTo(o2.getDate())*-1;
                 if (dateCompare == 0) {
                     return o1.getId() > o2.getId() ? -1 :
                             o1.getId() == o2.getId() ? 0 : 1;
