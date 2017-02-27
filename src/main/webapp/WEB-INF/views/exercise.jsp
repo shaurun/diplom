@@ -57,29 +57,7 @@
         </div><!-- /.container-fluid -->
     </nav>
 
-    <h1>This is sparta</h1>
-
-    <div class="row">
-    <!--<c:if test="${!empty listWords}">
-        <table class="table table-striped">
-            <thead>
-            <h2>Словарь урока</h2>
-            <tr>
-                <th>Слово</th>
-                <th>Значение</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${listWords}" var="word">
-                <tr>
-                    <td>${word.word}</td>
-                    <td>${word.translation}</td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </c:if>-->
-    </div>
+    <h1>Тестирование знаний</h1>
 
     <script>
         var i = 0;
@@ -121,16 +99,29 @@
         }
 
         function checkWord() {
+            if (document.getElementById("translation").value.trim() == "") {
+                return;
+            }
+
             var word = document.getElementById("word").innerHTML;
             var o = document.getElementById("check");
             if (document.getElementById("translation").value == generateDictionary()[i].value) {
                 o.setAttribute("class", "glyphicon glyphicon-ok form-control-feedback");
                 document.getElementById("dict").setAttribute("class", "form-group has-success has-feedback");
+                document.getElementsByName("verification_icon")[i].innerHTML =
+                    "<span class='glyphicon glyphicon-ok text-success'/>"
+                document.getElementsByName("single_word")[i].setAttribute("class", "bg-success");
             } else {
                 o.setAttribute("class", "glyphicon glyphicon-remove form-control-feedback");
                 document.getElementById("dict").setAttribute("class", "form-group has-error has-feedback");
+                document.getElementsByName("verification_icon")[i].innerHTML =
+                    "<span class='glyphicon glyphicon-remove text-warning'/>";
+                document.getElementsByName("single_word")[i].setAttribute("class", "bg-danger");
                 wrong++;
+
             }
+            document.getElementsByName("user_input")[i].innerHTML = document.getElementById("translation").value;
+
             checked = true;
         }
 
@@ -147,7 +138,22 @@
                 checked = false;
 
             }else{
-                alert("Количество правильных ответов: " + (end-wrong)/end*100 + "%");
+                document.getElementById("exercise").setAttribute("style", "display:block");
+                var result = document.getElementById("result");
+                result.setAttribute("style", "display: block;");
+                if ((end-wrong)/end*100 == 100) {
+                    result.setAttribute("class", "alert alert-success");
+                    result.innerHTML = "<strong>Отлично!</strong> Все ответы верные!";
+                } else if ((end-wrong)/end*100 > 80) {
+                    result.setAttribute("class", "alert alert-info");
+                    result.innerHTML = "<strong>Хорошо.</strong> Вы почти усвоили материал, нужно только закрепить!";
+                } else if ((end-wrong)/end*100 > 50) {
+                    result.setAttribute("class", "alert alert-warning");
+                    result.innerHTML = "<strong>Неплохо.</strong> Вы запомнили более половины слов!";
+                } else {
+                    result.setAttribute("class", "alert alert-danger");
+                    result.innerHTML = "<strong>Взбодритесь.</strong> Результат пока оставляет желать лучшего, но вы идете к успеху!";
+                }
             }
         }
 
@@ -174,11 +180,41 @@
     </form>
     </div>
 
+    <p>Шкала прогресса</p>
     <div class="progress">
         <div class="progress-bar" role="progressbar" id="pb"
              aria-valuemin="0" aria-valuemax="100" style="width:0%">
             0/${listWords.size()}
         </div>
+    </div>
+
+    <div id="result" style="display: none">
+    </div>
+
+    <div id="exercise" class="row" style="display: none">
+        <c:if test="${!empty listWords}">
+        <table class="table table-hover">
+            <thead>
+            <h2>Слова упражнения</h2>
+            <tr>
+                <th>Слово</th>
+                <th>Значение</th>
+                <th>Ваш вариант</th>
+                <th>Правильно</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${listWords}" var="word">
+                <tr name="single_word">
+                    <td>${word.word}</td>
+                    <td>${word.translation}</td>
+                    <td name="user_input"></td>
+                    <td name="verification_icon"></td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </c:if>
     </div>
 </div>
 </body>
