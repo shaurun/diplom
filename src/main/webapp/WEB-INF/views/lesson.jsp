@@ -7,6 +7,7 @@
 <head>
     <title>Словарь</title>
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="${contextPath}/resources/css/print.css" rel="stylesheet"/>
     <link rel="icon"
           type="image/png"
           href="${contextPath}/resources/favicon.ico" />
@@ -62,11 +63,12 @@
         <table class="table table-striped">
             <thead>
             <h2>Словарь урока</h2>
+            <span type="button" class="btn btn-success pull-right"><a href="<c:url value='/exercises/lesson/${lesson.id}'/>">Начать упражнение</a></span>
             <tr>
                 <th>Слово</th>
                 <th>Значение</th>
-                <th>Темы</th>
-                <th colspan="2"/>
+                <th class="hidden-print">Темы</th>
+                <th colspan="2" class="hidden-print"/>
             </tr>
             </thead>
             <tbody>
@@ -74,7 +76,7 @@
                 <tr>
                     <td>${word.word}</td>
                     <td>${word.translation}</td>
-                    <td>
+                    <td class="hidden-print">
                         <c:if test="${!empty word.topic}">
                             <span class="badge" style="background-color: ${word.topic.color}">
                                 <a href="<c:url value='/lesson/editWord/${lesson.id}-${word.id}/unbindTopic/${word.topic.id}'/>">
@@ -83,8 +85,8 @@
                             </span>
                         </c:if>
                     </td>
-                    <td><a href="<c:url value='/lesson/editWord/${lesson.id}-${word.id}'/>">Изменить</a></td>
-                    <td><a href="<c:url value='/lesson/deleteWord/${lesson.id}-${word.id}'/>">Удалить</a></td>
+                    <td class="hidden-print"><a href="<c:url value='/lesson/editWord/${lesson.id}-${word.id}'/>">Изменить</a></td>
+                    <td class="hidden-print"><a href="<c:url value='/lesson/deleteWord/${lesson.id}-${word.id}'/>">Удалить</a></td>
                 </tr>
             </c:forEach>
             </tbody>
@@ -92,7 +94,7 @@
     </c:if>
     </div>
 
-    <div class="row">
+    <div class="row hidden-print">
         <div class="col-sm-6">
     <c:url var="addWordAction" value="/lesson/${lesson.id}/addWord"/>
     <form:form action="${addWordAction}" commandName="word" accept-charset="UTF-8" class="form-inline">

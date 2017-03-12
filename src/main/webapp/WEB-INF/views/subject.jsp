@@ -86,7 +86,7 @@
                 <tbody>
                 <c:forEach items="${listTopics}" var="topic">
                     <tr>
-                        <td><span class="badge" style="background-color: ${topic.color}">${topic.name}</span></td>
+                        <td><span class="badge" style="background-color: ${topic.color}"><a href="<c:url value='/topic/${topic.id}'/>">${topic.name}</a></span></td>
                         <td><a href="<c:url value='/subject/editTopic/${subject.id}-${topic.id}'/>">Изменить</a> </td>
                         <td><a href="<c:url value='/subject/deleteTopic/${subject.id}-${topic.id}'/>">Удалить</a></td>
                     </tr>
