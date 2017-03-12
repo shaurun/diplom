@@ -221,8 +221,14 @@
             <tbody>
             <c:forEach items="${listWords}" var="word">
                 <tr name="single_word">
-                    <td>${word.word}</td>
-                    <td>${word.translation}</td>
+                    <c:if test="${!inverse}">
+                        <td>${word.word}</td>
+                        <td>${word.translation}</td>
+                    </c:if>
+                    <c:if test="${inverse}">
+                        <td>${word.translation}</td>
+                        <td>${word.word}</td>
+                    </c:if>
                     <td name="user_input"></td>
                     <td name="verification_icon"></td>
                 </tr>
