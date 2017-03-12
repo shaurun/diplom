@@ -63,6 +63,8 @@
             <table class="table table-striped">
                 <thead>
                 <h2>Словарь по теме</h2>
+                <span type="button" class="btn btn-success pull-right"><a href="<c:url value='/exercises/topic/${topic.id}'/>">Начать упражнение</a></span>
+                <span type="button" class="btn btn-success pull-right"><a href="<c:url value='/exercises/topic/${topic.id}?inverse'/>">Начать упражнение 2</a></span>
                 <tr>
                     <th>Слово</th>
                     <th>Значение</th>

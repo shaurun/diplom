@@ -33,9 +33,16 @@
                     <li><p class="navbar-text">>></p></li>
                     <li><a href="<c:url value='/subject/${subject.id}'/>">${subject.name}</a> </li>
                     <li><p class="navbar-text">>></p></li>
-                    <li><a href="#">Уроки</a> </li>
-                    <li><p class="navbar-text">>></p> </li>
-                    <li class="active"><a href="<c:url value='/lesson/${lesson.id}'/>">${lesson.name}</a></li>
+                    <c:if test="${!empty lesson}">
+                        <li><a href="#">Уроки</a> </li>
+                        <li><p class="navbar-text">>></p> </li>
+                        <li class="active"><a href="<c:url value='/lesson/${lesson.id}'/>">${lesson.name}</a></li>
+                    </c:if>
+                    <c:if test="${!empty topic}">
+                        <li><a href="#">Темы</a> </li>
+                        <li><p class="navbar-text">>></p> </li>
+                        <li class="active"><a href="<c:url value='/topic/${topic.id}'/>">${topic.name}</a></li>
+                    </c:if>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -65,13 +72,21 @@
         var wrong = 0;
         var checked = false;
 
-        function generateDictionary() {
+        function generateDictionary(inverse) {
             var dict = [];
             <c:forEach items="${listWords}" var="word">
-            dict.push({
-                key: "${word.word}",
-                value: "${word.translation}"
+            <c:if test="${!inverse}">
+                dict.push({
+                    key: "${word.word}",
+                    value: "${word.translation}"
             });
+            </c:if>
+            <c:if test="${inverse}">
+                dict.push({
+                    key: "${word.translation}",
+                    value: "${word.word}"
+                });
+            </c:if>
             </c:forEach>
             return dict;
         }

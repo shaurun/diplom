@@ -57,7 +57,7 @@ public class ExerciseController {
      * @return
      */
     @RequestMapping(value = "/exercises/lesson/{lessonId}", method = RequestMethod.GET)
-    public String shuffleLessonWords(Model model, @PathVariable("lessonId") long lessonId) {
+    public String shuffleLessonWords(Model model, @PathVariable("lessonId") long lessonId, String inverse) {
         Lesson lesson = lessonService.getLessonById(lessonId);
         model.addAttribute("subject", lesson.getSubject());
         model.addAttribute("lesson", lesson); //adding lesson just to know in what lesson we are
@@ -66,6 +66,32 @@ public class ExerciseController {
         long seed = System.nanoTime();
         Collections.shuffle(wordsList, new Random(seed));
         model.addAttribute("listWords", wordsList); //list of words under specified lesson
+
+        if (inverse != null) {
+            model.addAttribute("inverse", true);
+        }
+        return "exercise";
+    }
+
+    /**
+     * This method returns page with shuffled list of topic words to be used in JS
+     * @param model
+     * @param topicId
+     * @return
+     */
+    @RequestMapping(value = "/exercises/topic/{topicId}", method = RequestMethod.GET)
+    public String shuffleTopicWords(Model model, @PathVariable("topicId") long topicId, String inverse) {
+        Topic topic = topicService.getTopicById(topicId);
+        model.addAttribute("subject", topic.getSubject());
+        model.addAttribute("topic", topic); //adding topic just to know in what topic we are
+        //adding words
+        List<Word> wordsList = wordService.listTopicWords(topic);
+        long seed = System.nanoTime();
+        Collections.shuffle(wordsList, new Random(seed));
+        model.addAttribute("listWords", wordsList); //list of words under specified lesson
+        if (inverse != null) {
+            model.addAttribute("inverse", true);
+        }
         return "exercise";
     }
 
