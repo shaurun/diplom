@@ -40,4 +40,9 @@ public class WelcomeController {
         model.addAttribute("listNews", newsList);
         return "welcome";
     }
+
+    @RequestMapping(value = {"/tutorial"}, method = RequestMethod.GET)
+    public String tutorial(Model model) {
+        return "tutorial";
+    }
 }
