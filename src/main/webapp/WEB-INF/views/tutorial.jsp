@@ -31,9 +31,6 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <c:if test="${pageContext.request.userPrincipal.name != null}">
-                        <li><a href="<c:url value='/subjects'/>">Дисциплины</a></li>
-                    </c:if>
                     <li class="active"><a href="<c:url value='/tutorial'/>">Как это работает?</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

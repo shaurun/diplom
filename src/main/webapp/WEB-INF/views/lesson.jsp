@@ -33,8 +33,6 @@
                     <li><a href="<c:url value='/subjects'/>">Дисциплины</a> </li>
                     <li><p class="navbar-text">>></p></li>
                     <li><a href="<c:url value='/subject/${subject.id}'/>">${subject.name}</a> </li>
-                    <li><p class="navbar-text">>></p></li>
-                    <li><a href="#">Уроки</a> </li>
                     <li><p class="navbar-text">>></p> </li>
                     <li class="active"><a href="<c:url value='/lesson/${lesson.id}'/>">${lesson.name}</a></li>
                 </ul>

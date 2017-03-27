@@ -5,12 +5,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Словарь</title>
+    <title>Упражнения</title>
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="${contextPath}/resources/css/print.css" rel="stylesheet"/>
     <link rel="icon"
           type="image/png"
-          href="${contextPath}/resources/favicon.ico"/>
+          href="${contextPath}/resources/favicon.ico" />
 </head>
 <body>
 <div class="container">
@@ -34,7 +33,7 @@
                     <li><p class="navbar-text">>></p></li>
                     <li><a href="<c:url value='/subject/${subject.id}'/>">${subject.name}</a> </li>
                     <li><p class="navbar-text">>></p></li>
-                    <li class="active"><a href="<c:url value='/topic/${topic.id}'/>">${topic.name}</a></li>
+                    <li class="active"><a href="<c:url value='/${subject.id}/exercises'/>">Упражнения</a> </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -56,28 +55,43 @@
         </div><!-- /.container-fluid -->
     </nav>
 
-    <div class="row">
-        <c:if test="${!empty listWords}">
-            <table class="table table-striped">
-                <thead>
-                <h2>Словарь по теме</h2>
-                <span type="button" class="btn btn-success pull-right"><a href="<c:url value='/exercises/topic/${topic.id}'/>">Начать упражнение</a></span>
-                <span type="button" class="btn btn-success pull-right"><a href="<c:url value='/exercises/topic/${topic.id}?inverse'/>">Начать упражнение 2</a></span>
-                <tr>
-                    <th>Слово</th>
-                    <th>Значение</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${listWords}" var="word">
-                    <tr>
-                        <td>${word.word}</td>
-                        <td>${word.translation}</td>
-                    </tr>
+    <c:url var="createExercise" value="/subject/${subject.id}/exercise"/>
+    <form:form action="${createExercise}" accept-charset="UTF-8" method="get">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <div class="row">
+            <div class="col-sm-6">
+                <p class="lead">Выберите уроки</p>
+                <c:forEach items="${lessons}" var="lesson">
+                <input type="checkbox" name="lesson" value="${lesson.id}"/>${lesson.name}<br>
                 </c:forEach>
-                </tbody>
-            </table>
-        </c:if>
-    </div>
-</div>
+            </div>
+            <div class="col-sm-6">
+                <p class="lead">Выберите темы</p>
+                <c:forEach items="${topics}" var="topic">
+                <input type="checkbox" name="topic" value="${topic.id}"/>${topic.name}<br>
+                </c:forEach>
+            </div>
+        </div>
+        <div class="row">
+            <p class="lead">Допускать повторы?</p>
+            <input type="radio" name="repeatable" value="true" checked/>Да
+            <input type="radio" name="repeatable" value="false"/>Нет
+        </div>
+        <div class="row">
+            <p class="lead">Максимальное количество слов</p>
+            <input type="number" name="quantity" min="0" max="100" step="5"/>
+        </div>
+        <div class="row">
+            <p class="lead">Тип упражнения</p>
+            <input type="radio" name="type" value="1" checked/>Дано слово
+            <input type="radio" name="type" value="2" />Дано значение
+            <input type="radio" name="type" value="3" />Вперемешку
+        </div>
+        <div class="row">
+            <button type="submit" class="btn btn-success"><spring:message text="Начать упражнение"/></button>
+        </div>
+    </form:form>
+
+</div> <!-- end container-->
 </body>
+</html>

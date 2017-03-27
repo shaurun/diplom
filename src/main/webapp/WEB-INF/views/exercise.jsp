@@ -71,22 +71,26 @@
         const end = ${listWords.size()};
         var wrong = 0;
         var checked = false;
+        var dictionary;
 
-        function generateDictionary(inverse) {
+        function generateDictionary(inverse, mix) {
             var dict = [];
             <c:forEach items="${listWords}" var="word">
-            <c:if test="${!inverse}">
+            if (mix) {
+                var wordOrTranslation = Math.floor(Math.random()*10) % 2;
+                inverse = wordOrTranslation == 1;
+            }
+
+            if (!inverse) {
                 dict.push({
                     key: "${word.word}",
                     value: "${word.translation}"
             });
-            </c:if>
-            <c:if test="${inverse}">
+            } else if (inverse)
                 dict.push({
                     key: "${word.translation}",
                     value: "${word.word}"
                 });
-            </c:if>
             </c:forEach>
             return dict;
         }
@@ -103,11 +107,12 @@
                     func();
                 }
             }
+            dictionary = generateDictionary(${inverse}, ${mix})
         }
 
         function setWord() {
             var o = document.getElementById("word");
-            o.innerHTML = generateDictionary()[i].key;
+            o.innerHTML = dictionary[i].key;
             document.getElementById("translation").value = "";
             document.getElementById("check").setAttribute("class", "");
             document.getElementById("dict").setAttribute("class", "form-group");
@@ -120,7 +125,7 @@
 
             var word = document.getElementById("word").innerHTML;
             var o = document.getElementById("check");
-            if (document.getElementById("translation").value == generateDictionary()[i].value) {
+            if (document.getElementById("translation").value == dictionary[i].value) {
                 o.setAttribute("class", "glyphicon glyphicon-ok form-control-feedback");
                 document.getElementById("dict").setAttribute("class", "form-group has-success has-feedback");
                 document.getElementsByName("verification_icon")[i].innerHTML =
