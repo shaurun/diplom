@@ -11,8 +11,8 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 -- Дамп структуры базы данных polyglot
-CREATE DATABASE IF NOT EXISTS `polyglot` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `polyglot`;
+CREATE DATABASE IF NOT EXISTS `polyglotnetby` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `polyglotnetby`;
 
 
 -- Дамп структуры для таблица polyglot.lessons
