@@ -9,6 +9,7 @@
 http://www.springframework.org/schema/security ">
 
     <http auto-config="true">
+        <access-denied-handler error-page="/errors" />
         <intercept-url pattern="/"/>
         <intercept-url pattern="/welcome"/>
         <intercept-url pattern="/subjects/*" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
@@ -27,6 +28,8 @@ http://www.springframework.org/schema/security ">
             <password-encoder ref="encoder"></password-encoder>
         </authentication-provider>
     </authentication-manager>
+
+
 
     <beans:bean id="userDetailsServiceImpl"
                 class="com.shaurun.site.services.UserDetailsServiceImpl">
