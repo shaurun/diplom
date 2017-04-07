@@ -115,16 +115,15 @@
         </c:if>
     </div>
     </div>
-</div>
 
-
-<footer>
-    <c:if test="${pageContext.request.userPrincipal.name != null}">
-        <c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN')}">
-            <a href="<c:url value='/news'/>">Управление сайтом</a>
+    <footer>
+        <c:if test="${pageContext.request.userPrincipal.name != null}">
+            <c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN')}">
+                <a href="<c:url value='/admin'/>">Управление сайтом</a>
+            </c:if>
         </c:if>
-    </c:if>
-</footer>
+    </footer>
+</div>
 
 <script src="https://ajax.googleapis.com/libs/jquery/1.11.2/jquery.min.js"/>
 <script src="${contextPath}/resources/js/bootstrap.min.ja"/>
