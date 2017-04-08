@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Controller
 public class WelcomeController {
@@ -26,6 +27,12 @@ public class WelcomeController {
     public String listNews(Model model) {
         model.addAttribute("news", new News());
         List<News> newsList = newsService.listNews();
+        newsList.removeIf(new Predicate<News>() {
+            @Override
+            public boolean test(News news) {
+                return !news.getPublished();
+            }
+        });
         newsList.sort(new Comparator<News>() {
             @Override
             public int compare(News o1, News o2) {

@@ -1,5 +1,6 @@
 package com.shaurun.site.model;
 
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -29,6 +30,10 @@ public class News {
     @Column(name="date")
     //@DateTimeFormat(pattern="dd.MM.yyyy hh:mm")
     private Date date;
+
+    @Column(name = "published")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean published;
 
     public News() {}
 
@@ -62,6 +67,14 @@ public class News {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public boolean getPublished() {
+        return published;
+    }
+
+    public void setPublished(boolean published) {
+        this.published = published;
     }
 
     @Override

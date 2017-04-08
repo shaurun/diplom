@@ -61,11 +61,13 @@
         </div><!-- /.container-fluid -->
     </nav>
 
-
-    <h2>Добавить новость</h2>
+    <div class="row">
+        <div class="col-md-5 col-md-offset-3">
+            <h2>Добавить новость</h2>
     <c:url var="addAction" value="/news/add"/>
     <form:form action="${addAction}" commandName="news">
         <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+
         <table>
             <c:if test="${!empty news.title}">
                 <tr>
@@ -87,7 +89,7 @@
                     </form:label>
                 </td>
                 <td>
-                    <form:input path="title"/>
+                    <form:input cssStyle="min-width: 500px;" path="title"/>
                 </td>
             </tr>
             <tr>
@@ -98,6 +100,16 @@
                 </td>
                 <td>
                     <form:textarea cssStyle="min-width: 500px; min-height: 200px" path="info"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form:label path="published">
+                        <spring:message text="Опубликовать?"/>
+                    </form:label>
+                </td>
+                <td>
+                    <form:checkbox path="published"/>
                 </td>
             </tr>
             <tr>
@@ -114,6 +126,8 @@
             </tr>
         </table>
     </form:form>
+            </div>
+        </div>
 
     <h1>Список новостей</h1>
     <c:if test="${!empty listNews}">
@@ -122,6 +136,7 @@
                 <th>Заголовок</th>
                 <th style="max-width: 700px">Содержание</th>
                 <th>Дата создания</th>
+                <th>Опубликовано?</th>
                 <th>Изменить</th>
                 <th>Удалить</th>
             </tr>
@@ -130,6 +145,10 @@
                     <td><a href="<c:url value='/newsData/${news.id}'/>">${news.title}</a></td>
                     <td style="max-width: 700px">${news.info}</td>
                     <td>${news.date}</td>
+                    <td>
+                        <c:if test="${news.published == true}"><span class="glyphicon glyphicon-ok text-success"/></c:if>
+                        <c:if test="${news.published == false}"><span class='glyphicon glyphicon-remove text-warning'/></c:if>
+                    </td>
                     <td><a href="<c:url value='/edit/${news.id}'/>">Изменить</a></td>
                     <td><a href="<c:url value='/delete/${news.id}'/>">Удалить</a></td>
                 </tr>
