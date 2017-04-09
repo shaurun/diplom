@@ -31,7 +31,7 @@ public class ErrorController {
                 break;
             }
             case 500: {
-                errorMsg = "Http Error Code: 500. Internal Server Error";
+                errorMsg = "Http Error Code: 500. Сервер сейчас недоступен. Пожалуйста, попробуйте зайти позже.";
                 break;
             }
         }
