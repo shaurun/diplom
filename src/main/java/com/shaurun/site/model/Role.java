@@ -56,4 +56,24 @@ public class Role {
                 ", users=" + users +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof Role)) {
+            return false;
+        }
+
+        Role role = (Role) o;
+
+        return role.getId() == this.getId() && role.getName().equals(this.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) getId();
+    }
 }

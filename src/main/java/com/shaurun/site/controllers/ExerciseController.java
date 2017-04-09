@@ -66,13 +66,6 @@ public class ExerciseController {
                                @RequestParam(value = "repeatable", required = false, defaultValue = "true") boolean repeatable,
                                @RequestParam(value = "quantity", required = false, defaultValue = "0") int quantity,
                                @RequestParam(value = "type", required = false, defaultValue = "1") int type)    {
-        System.out.println("------------------------------");
-        System.out.println(lessonIds);
-        System.out.println(topicIds);
-        System.out.println(repeatable);
-        System.out.println(quantity);
-        System.out.println(type);
-
         List<Word> words = new ArrayList<>();
 
         if (topicIds == null && lessonIds == null) { //do nothing

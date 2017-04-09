@@ -99,7 +99,7 @@
                     <div class="col-sm-12"><h1>Выберите тип действий</h1></div>
                 </div>
                 <div class="row">
-                    <a href="#">
+                    <a href="users/">
                         <div class="col-sm-6">
                             <img src="${contextPath}/resources/user_management.png" style="max-width: 100%; max-height: 100%">
                             <h2>Управление ролями пользователей</h2>
